@@ -78,6 +78,7 @@ class Specification(ABC):
             try:
                 return self.get_variable_impl(ea)
             except Exception as e:
+                traceback.print_stack()
                 raise type(e)(f"Error when trying to get variable {ea:x}: {str(e)}") from e
 
     @abstractmethod

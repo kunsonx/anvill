@@ -161,7 +161,6 @@ class VoidType(Type):
 
 
 class PointerType(Type):
-
     __slots__ = ("_elem_type",)
 
     def __init__(self):
@@ -352,7 +351,6 @@ class UnionType(Type):
 
 
 class IntegerType(Type):
-
     __slots__ = ("_size", "_is_signed")
 
     _FORM = {
@@ -410,7 +408,6 @@ class IntegerType(Type):
 
 
 class FloatingPointType(Type):
-
     __slots__ = ("_size",)
 
     _FORM: Dict[int, str] = {
@@ -553,9 +550,9 @@ class TypedefType(AliasType):
     pass
 
 
-class CharacterType(IntegerType):
+class CharacterType(Type):
     def __init__(self, is_signed=None):
-        super(CharacterType, self).__init__(1, is_signed)
+        self._is_signed = is_signed
 
     def size(self, arch: Arch) -> int:
         return 1
@@ -567,6 +564,9 @@ class CharacterType(IntegerType):
             return "s"  # `signed char`
         else:
             return "S"  # `unsigned char`
+
+    def flatten(self, arch: Arch, out_list: List[Type]):
+        out_list.append(self)
 
 
 class MMXType(Type):
@@ -584,7 +584,6 @@ class MMXType(Type):
 
 
 class BoolType(AliasType):
-
     _INSTANCE = None
 
     def __new__(cls):

@@ -28,7 +28,7 @@ execute_process(
     "${Python3_EXECUTABLE}"
     "${CMAKE_CURRENT_LIST_DIR}/../setup.py"
     install
-    ${purelib_arg}
+#    ${purelib_arg}
     ${prefix_arg}
     ${root_parameter}
     ${single_version}
